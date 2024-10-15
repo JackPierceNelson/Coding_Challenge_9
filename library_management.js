@@ -6,7 +6,7 @@ class Book {
         this.title = title;
         this.author = author;
         this.ISBN = ISBN;
-        this._isAvailable = _isAvailable;
+        this._isAvailable = true;
     }
 
     // getDetails method returns a string containing title, author, and ISBN of the book
@@ -56,14 +56,23 @@ class Section {
     listBooks() {
         return this.books.map(book => {return `${book.title} - ${book.isAvailable? 'Available': 'Borrowed'}`;})
     }
+
+    calculateTotalBooksAvailable() {
+        return this.books.reduce((total, book) => {
+            return total + (book.isAvailable ? 1:0);
+        },0);
+    }
 }
 
 // Test case
 const fictionSection = new Section("Fiction");
 const book1 = new Book("Star Wars Episode I", "Author: George Lucas", "ISBN: 2345");
+const book5 = new Book("Star Wars Episode V", "Author: George Lucas", "ISBN: 5567");
 fictionSection.addBook(book1);
+fictionSection.addBook(book5);
 console.log(fictionSection.listBooks());
 console.log(fictionSection.getAvailableBooks());
+console.log(fictionSection.calculateTotalBooksAvailable());
 
 // Task 3: Create a Patron Class
 
@@ -162,5 +171,54 @@ const book4 = new Book("Star Wars Episode III", "Author: George Lucas", "ISBN: 8
 
 nonVIP_patron.borrowBook(book3);
 VIP_patron.borrowBook(book4);
+
+// Task 5: Handle Books Borrowing and Returning
+// Extension of Task 2
+
+/*
+class Section {
+    constructor(name) {
+        this.name = name;
+        this.books = [];
+    }
+    
+    // addBook method checks if the argument is an instance of the Book class, if not, it logs an error
+    addBook(book) {
+        if (book instanceof Book) {
+            this.books.push(book);
+        }
+        else {console.log("Error: Cannot add book objects");}
+    }
+
+    // Used the filter method to create an array of all available and borrowed books
+    getAvailableBooks() {
+        return this.books.filter(book => book.isAvailable).length;
+    }
+
+    // Used the map method to create an array of strings each representing a book
+    listBooks() {
+        return this.books.map(book => {return `${book.title} - ${book.isAvailable? 'Available': 'Borrowed'}`;})
+    }
+
+    calculateTotalBooksAvailable() {
+        return this.books.reduce((total, book) => {
+            return total + (book.isAvailable ? 1:0);
+        },0);
+    }
+}
+
+// Test case
+const fictionSection = new Section("Fiction");
+const book1 = new Book("Star Wars Episode I", "Author: George Lucas", "ISBN: 2345");
+const book5 = new Book("Star Wars Episode V", "Author: George Lucas", "ISBN: 5567");
+fictionSection.addBook(book1);
+fictionSection.addBook(book5);
+console.log(fictionSection.listBooks());
+console.log(fictionSection.getAvailableBooks());
+console.log(fictionSection.calculateTotalBooksAvailable());
+
+*/
+
+
 
 
